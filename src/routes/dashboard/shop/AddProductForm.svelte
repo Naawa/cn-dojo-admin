@@ -2,7 +2,8 @@
 	import { scale } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	import type { Product } from '$lib/server/data';
+	import type { Product } from '$lib/server/db/schema/product';
+	
 
 	let {
 		open = $bindable(false),

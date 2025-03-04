@@ -1,25 +1,32 @@
 import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types.js";
 import { validateName } from "$lib/server/validation";
-import type { Product } from "$lib/server/db/schema/product.js";
+import { product as productTable, type Product} from "$lib/server/db/schema/product.js";
+import { db } from "$lib/server/db/index.js";
+import { eq } from "drizzle-orm";
 
 export const load: PageServerLoad = async ({ locals }) => {
     let admin = locals.admin;
-    
-    let products: Product[] = [
-        {
-            id: 1,
-            name: "Infinity cube",
-            price: 20,
-            description: "This is an infinity cube",
-            category: "cube",
-            updated_at: new Date(),
-            created_at: new Date(),
-            deleted_at: null
+
+    async function getProducts() {
+            let products: Product[] | null = null
+            try {
+                if (admin?.center) {
+                    let data = await db.select().from(productTable).where(eq(productTable.center,
+                        admin.center
+                    ))
+                    if(data) {
+                        products = data
+                    }
+                }
+            }
+            catch (e) {
+                return products
+            }
+            return products
         }
-    ];
     
-    return { products, admin };
+    return { products: await getProducts(), admin };
 };
 
 export const actions: Actions = {

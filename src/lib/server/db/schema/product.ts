@@ -1,5 +1,6 @@
 import { integer, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { timestamps } from "./helpers";
+import { center } from "./center";
 
 export const product = pgTable('product', {
     id: serial('id').primaryKey(),
@@ -7,6 +8,7 @@ export const product = pgTable('product', {
     price: integer('price').notNull(),
     description: text('description').notNull(),
     category: text('category').references(() => productCategory.category),
+    center: text('center').notNull().references(() => center.location),
     ...timestamps
 });
 
