@@ -8,7 +8,7 @@
 </script>
 
 <section>
-	{#if showForm && products}
+	{#if showForm}
 		<AddProductForm {products} {form} bind:open={showForm}></AddProductForm>
 	{/if}
 	<h2>Shop</h2>

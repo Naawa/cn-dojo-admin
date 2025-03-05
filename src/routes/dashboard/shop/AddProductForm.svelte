@@ -9,7 +9,7 @@
 		open = $bindable(false),
 		form,
 		products
-	}: { open: boolean; form: ActionData; products: Product[]} = $props();
+	}: { open: boolean; form: ActionData; products: Product[] | null} = $props();
 
 	let productName: string = $state('');
 	let price: number = $state(0);
@@ -17,7 +17,8 @@
 
 	$effect(() => {
 		let attempt = 0;
-		for (let i = 0; i < products.length; i++) {
+		if(products) {
+			for (let i = 0; i < products.length; i++) {
 			if (productName === products[i].name) {
 				attempt += 1;
 				let newProductName = productName;
@@ -29,6 +30,7 @@
 				productName = newProductName;
 				i = 0;
 			}
+		}
 		}
 	});
 </script>

@@ -9,22 +9,22 @@ export const load: PageServerLoad = async ({ locals }) => {
     let admin = locals.admin;
 
     async function getProducts() {
-            let products: Product[] | null = null
-            try {
-                if (admin?.center) {
-                    let data = await db.select().from(productTable).where(eq(productTable.center,
-                        admin.center
-                    ))
-                    if(data) {
-                        products = data
-                    }
+        let products: Product[] | null = null
+        try {
+            if (admin?.center) {
+                let data = await db.select().from(productTable).where(eq(productTable.center,
+                    admin.center
+                ))
+                if (data) {
+                    products = data
                 }
             }
-            catch (e) {
-                return products
-            }
+        }
+        catch (e) {
             return products
         }
+        return products
+    }
     
     return { products: await getProducts(), admin };
 };
