@@ -164,7 +164,8 @@
 		z-index: 1;
 		gap: 1em;
 		height: 100%;
-		width: fit-content;
+		width: 80vw;
+		min-width: fit-content;
 		top: 0;
 
 		form {

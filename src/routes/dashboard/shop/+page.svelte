@@ -3,13 +3,13 @@
 	import AddProductForm from './AddProductForm.svelte';
 
 	let { form, data }: { form: ActionData; data: PageData } = $props();
-	let { products } = data;
+	let { products, categories } = data;
 	let showForm: boolean = $state(false);
 </script>
 
 <section>
 	{#if showForm}
-		<AddProductForm {products} {form} bind:open={showForm}></AddProductForm>
+		<AddProductForm {categories} {products} {form} bind:open={showForm}></AddProductForm>
 	{/if}
 	<h2>Shop</h2>
 	<br />

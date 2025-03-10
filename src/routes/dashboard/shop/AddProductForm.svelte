@@ -2,14 +2,20 @@
 	import { scale } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	import type { Product } from '$lib/server/db/schema/product';
-	
+	import type { Product, ProductCategory } from '$lib/server/db/schema/product';
+	import { invalidateAll } from '$app/navigation';
 
 	let {
 		open = $bindable(false),
 		form,
-		products
-	}: { open: boolean; form: ActionData; products: Product[] | null} = $props();
+		products,
+		categories
+	}: {
+		open: boolean;
+		form: ActionData;
+		products: Product[] | null;
+		categories: ProductCategory[] | null;
+	} = $props();
 
 	let productName: string = $state('');
 	let price: number = $state(0);
@@ -17,26 +23,26 @@
 
 	$effect(() => {
 		let attempt = 0;
-		if(products) {
+		if (products) {
 			for (let i = 0; i < products.length; i++) {
-			if (productName === products[i].name) {
-				attempt += 1;
-				let newProductName = productName;
-				if (attempt > 1) {
-					newProductName = productName.substring(0, productName.length - 1) + attempt;
-				} else {
-					newProductName += attempt;
+				if (productName === products[i].name) {
+					attempt += 1;
+					let newProductName = productName;
+					if (attempt > 1) {
+						newProductName = productName.substring(0, productName.length - 1) + attempt;
+					} else {
+						newProductName += attempt;
+					}
+					productName = newProductName;
+					i = 0;
 				}
-				productName = newProductName;
-				i = 0;
 			}
-		}
 		}
 	});
 </script>
 
-<section transition:scale>
-	<form method="post" action="/dashboard/products?/add" use:enhance>
+<section class="card" transition:scale>
+	<form method="post" action="/dashboard/shop?/add" use:enhance>
 		<span>
 			<h2>New Product</h2>
 			<button
@@ -55,42 +61,40 @@
 		<span>
 			<div class="input-container">
 				<label for="productName"> Product Name </label>
-				<input
-					bind:value={productName}
-					name="productName"
-					placeholder="Example Product"
-				/>
+				<input bind:value={productName} name="productName" placeholder="Example Product" />
 			</div>
 		</span>
 
 		<span>
 			<div class="input-container">
 				<label for="price"> Price (pts) </label>
-				<input
-					type="number"
-					bind:value={price}
-					name="price"
-					placeholder="10"
-					min="0"
-					step="1"
-				/>
+				<input type="text" bind:value={price} name="price"/>
 			</div>
 		</span>
 
 		<div class="input-container">
-			<label for="category"> Category </label>
-			<input
-				bind:value={category}
-				name="category"
-				placeholder="Fidget, Toy, etc."
-			/>
+			<div class="input-container">
+				<label for="belt">Category</label>
+				<select bind:value={category} name="belt">
+					{#if categories}
+						{#each categories as category}
+							<option value={category}>{category}</option>
+						{/each}
+					{/if}
+				</select>
+			</div>
 		</div>
 
 		{#if form?.error || form?.success}
 			<b class:error={form.error} class:success={form.success}>{form.success}{form.error}</b>
 		{/if}
 
-		<button type="submit">Add to Shop</button>
+		<button
+			type="submit"
+			onclick={() => {
+				invalidateAll();
+			}}>Add to Shop</button
+		>
 	</form>
 </section>
 
@@ -98,14 +102,13 @@
 	section {
 		justify-content: center;
 		align-items: center;
-		position: absolute;
+		position: fixed;
 		background-color: #fcfdff;
 		margin: 0;
 		z-index: 1;
 		gap: 1em;
 		height: 100%;
-		width: 100%;
-		padding: 0em;
+		width: 80vw;
 		top: 0;
 
 		form {

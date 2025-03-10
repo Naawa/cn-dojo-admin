@@ -1,7 +1,7 @@
 import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types.js";
 import { validateName } from "$lib/server/validation";
-import { product as productTable, type Product} from "$lib/server/db/schema/product.js";
+import { product as productTable, productCategory as productCategoryTable, type ProductCategory, type Product } from "$lib/server/db/schema/product.js";
 import { db } from "$lib/server/db/index.js";
 import { eq } from "drizzle-orm";
 
@@ -25,8 +25,22 @@ export const load: PageServerLoad = async ({ locals }) => {
         }
         return products
     }
-    
-    return { products: await getProducts(), admin };
+
+    async function getCategories() {
+        let categories: ProductCategory[] | null = null
+        try {
+            let data = await db.select().from(productCategoryTable)
+            if (data) {
+                categories = data
+            }
+        }
+        catch (e) {
+            return categories
+        }
+        return categories
+    }
+
+    return { products: await getProducts(), admin, categories: await getCategories() };
 };
 
 export const actions: Actions = {
@@ -37,18 +51,21 @@ export const actions: Actions = {
             name: formData.get('productName') as string,
             price: parseFloat(formData.get('price') as string),
             category: formData.get('category') as string,
-            stock: parseInt(formData.get('stock') as string),
         };
 
         if (!validateName(productData.name)) {
             return fail(400, { error: "Invalid product name." });
         }
 
-        // Insert into database (mocked for now)
+        if (isNaN(productData.price)) {
+            return fail(400, { error: "Invalid price." });
+        }
+
+        // Insert into database (mocked for now)9
         console.log("New product added:", productData);
-        
+
         return { success: "Successfully added product!" };
     },
-    update: () => {},
-    remove: () => {}
+    update: () => { },
+    remove: () => { }
 };
