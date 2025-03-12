@@ -1,21 +1,31 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
-  import type { Student, StudentProfile } from '$lib/server/db/schema/student.js';
-  import { writable } from 'svelte/store';
+    import { enhance } from '$app/forms';
+    import { invalidateAll } from '$app/navigation';
+    import type { Student, StudentProfile } from '$lib/server/db/schema/student.js';
+    import { writable } from 'svelte/store';
 
-  let { data, form } = $props();
-  let { userName, students } = data;
-  let studentData: { student: Student, student_profile: StudentProfile } = students[0];
+    let { data, form } = $props();
+    let { userName, students } = $state(data);
+    let studentData: { student: Student, student_profile: StudentProfile } = $state(data.students[0]);
 
-  for (let i = 0; i < students.length; i++) {
-      if (students[i].student.userName == userName) {
-          studentData = students[i];
-          break;
-      }
-  }
+    let student = $state(data.students[0].student);
+    let student_profile = $state(data.students[0].student_profile);
+    let activeTab = writable<'positive' | 'negative'>('positive');
+    let index = $state(0);
+    for (let i = 0; i < data.students.length; i++) {
+        if (data.students[i].student.userName == userName) {
+            index = i;
+            break;
+        }
+    }
 
-  let { student, student_profile } = studentData;
-  let activeTab = writable<'positive' | 'negative'>('positive');
+  $effect(() => {
+        
+		students = data.students;
+        studentData = data.students[index];
+        student_profile = data.students[index].student_profile;
+        student = data.students[index].student;
+    });
 </script>
 
 <section>
@@ -31,9 +41,9 @@
       <!-- Custom Input for Adding Points -->
       <form method="post" action="/dashboard/students/{userName}?/addPoints" use:enhance class="custom-controls">
           <input type="number" name="pointsToAdd" placeholder="Custom Points">
-          <input hidden bind:value={student_profile.points} type="text" name="points">
-          <input hidden bind:value={student.id} type="text" name="studentId">
-          <button>Modify Points</button>
+          <input hidden value={student_profile.points} type="text" name="points">
+          <input hidden value={student.id} type="text" name="studentId">
+          <button onclick={() => { invalidateAll()}}>Modify Points</button>
       </form>
   </div>
 
@@ -46,11 +56,13 @@
   <!-- Positive Buttons -->
   {#if $activeTab === 'positive'}
   <div class="grid">
-      <form method="post" action="/dashboard/students/{userName}?/addPoints" use:enhance>
+      <form method="post" action="/dashboard/students/{userName}?/addPoints" use:enhance={
+        ({})=>{reset: true}
+      }>
           <input hidden value="5" name="pointsToAdd">
-          <input hidden bind:value={student_profile.points} type="text" name="points">
-          <input hidden bind:value={student.id} type="text" name="studentId">
-          <button class="point-btn positive">
+          <input hidden value={student_profile.points} type="text" name="points">
+          <input hidden value={student.id} type="text" name="studentId">
+          <button class="point-btn positive" onclick={() => { invalidateAll() }}>
               <span class="point-value">+5</span>
               <img src="/attention.png" alt="Add Points" class="icon">
               <span class="label">Game Finished</span>
@@ -59,9 +71,9 @@
 
       <form method="post" action="/dashboard/students/{userName}?/addPoints" use:enhance>
           <input hidden value="10" name="pointsToAdd">
-          <input hidden bind:value={student_profile.points} type="text" name="points">
-          <input hidden bind:value={student.id} type="text" name="studentId">
-          <button class="point-btn positive">
+          <input hidden value={student_profile.points} type="text" name="points">
+          <input hidden value={student.id} type="text" name="studentId">
+          <button class="point-btn positive" onclick={() => { invalidateAll()}}>
               <span class="point-value">+10</span>
               <img src="/attention.png" alt="Add Points" class="icon">
               <span class="label">Level-Up</span>
@@ -75,9 +87,9 @@
   <div class="grid">
       <form method="post" action="/dashboard/students/{userName}?/removePoints" use:enhance>
           <input hidden value="5" name="pointsToRemove">
-          <input hidden bind:value={student_profile.points} type="text" name="points">
-          <input hidden bind:value={student.id} type="text" name="studentId">
-          <button class="point-btn negative">
+          <input hidden value={student_profile.points} type="text" name="points">
+          <input hidden value={student.id} type="text" name="studentId">
+          <button class="point-btn negative" onclick={() => { invalidateAll()}}>
               <span class="point-value">-5</span>
               <img src="/close-login.png" alt="Remove Points" class="icon">
               <span class="label">Disrespectful</span>
@@ -86,9 +98,9 @@
 
       <form method="post" action="/dashboard/students/{userName}?/removePoints" use:enhance>
           <input hidden value="10" name="pointsToRemove">
-          <input hidden bind:value={student_profile.points} type="text" name="points">
-          <input hidden bind:value={student.id} type="text" name="studentId">
-          <button class="point-btn negative">
+          <input hidden value={student_profile.points} type="text" name="points">
+          <input hidden value={student.id} type="text" name="studentId">
+          <button class="point-btn negative" onclick={() => { invalidateAll()}}>
               <span class="point-value">-10</span>
               <img src="/close-login.png" alt="Remove Points" class="icon">
               <span class="label">No Bueno</span>
@@ -189,7 +201,7 @@
       width: 40px;
       height: 40px;
       object-fit: contain;
-      margin-top: auto; /* Pushes it downward */
+      margin-top: auto; /* Pushes it down */
   }
 
   /* Push the label to the bottom */
