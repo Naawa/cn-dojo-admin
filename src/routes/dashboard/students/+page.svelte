@@ -147,6 +147,10 @@
 			gap: 1em;
 			flex-wrap: wrap;
 		}
+		span:last-of-type {
+			padding: 1em;
+			overflow: scroll;
+		}
 
 		a {
 			text-decoration: none;

@@ -7,7 +7,7 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 
 <div>
 	<span class="side-nav"><SideBar></SideBar></span>
-	<div>
+	<div class="bordered">
 		<slot />
 	</div>
 	<span class="bottom-nav"><BottomBar></BottomBar></span>
@@ -16,25 +16,25 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 <style>
 	div {
 		display: flex;
-		min-height: 100vh;
+		position: relative;
+		height: 100vh;
+		gap: 1em;
+		padding: 1em;
 		
 		div {
 			flex-direction: column;
 			position: relative;
-			margin-left: 14em;
 			width: 100%;
+			height: 100%;
 		}
 	}
 	.side-nav {
 		display: flex;
-		width: 14em;
-		position: fixed;
 	}
 	.bottom-nav {
 		display: none;
-		position: fixed;
 		bottom: 0;
-		width: 100vw;
+		width: 100;
 		background-color: #fcfdff;
 		z-index: 1;
 	}
@@ -47,7 +47,9 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 			display: flex;
 		}
 		div {
+			flex-direction: column;
 			div {
+				max-height: calc(90vh - 3em);
 				margin-left: 0;
 			}
 		}

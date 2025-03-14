@@ -43,6 +43,8 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		position: relative;
+		height: 100%;
 
 		span {
 			display: flex;

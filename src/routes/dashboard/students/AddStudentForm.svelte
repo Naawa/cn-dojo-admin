@@ -42,7 +42,7 @@
 	});
 </script>
 
-<section transition:scale class="card">
+<section transition:scale class="bordered">
 	<form method="post" action="/dashboard/students?/add" use:enhance>
 		<span>
 			<h2>New Student</h2>
@@ -158,15 +158,15 @@
 	section {
 		justify-content: center;
 		align-items: center;
-		position: fixed;
+		position: absolute;
 		background-color: #fcfdff;
-		margin: 0;
 		z-index: 1;
 		gap: 1em;
 		height: 100%;
-		width: 80vw;
+		width: 100%;
 		min-width: fit-content;
-		top: 0;
+		overflow: scroll;
+		padding: 2em;
 
 		form {
 			display: flex;
@@ -174,7 +174,8 @@
 			align-items: center;
 			justify-content: center;
 			gap: 1em;
-			max-width: 32em;
+			max-width: 24em;
+			padding-top: 6em;
 
 			input,
 			select {

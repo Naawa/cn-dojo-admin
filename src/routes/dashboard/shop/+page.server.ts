@@ -4,6 +4,7 @@ import { validateName } from "$lib/server/validation";
 import { product as productTable, productCategory as productCategoryTable, type ProductCategory, type Product } from "$lib/server/db/schema/product.js";
 import { db } from "$lib/server/db/index.js";
 import { eq } from "drizzle-orm";
+import { put } from "@vercel/blob";
 
 export const load: PageServerLoad = async ({ locals }) => {
     let admin = locals.admin;
@@ -51,6 +52,7 @@ export const actions: Actions = {
             name: formData.get('productName') as string,
             price: parseFloat(formData.get('price') as string),
             category: formData.get('category') as string,
+            image: formData.get('image') as File
         };
 
         if (!validateName(productData.name)) {
@@ -61,10 +63,16 @@ export const actions: Actions = {
             return fail(400, { error: "Invalid price." });
         }
 
-        // Insert into database (mocked for now)9
-        console.log("New product added:", productData);
+        if(!productData.image) {
+            return fail(400, { error: "Please upload an image!" });
+        }
 
-        return { success: "Successfully added product!" };
+        // Insert into database (mocked for now)
+        console.log("New product added:", productData);
+        let url = ""
+        // const { url } = await put(productData.image.name, productData.image, { access: "public" });
+
+        return { success: "Successfully added product!", imageUrl: url };
     },
     update: () => { },
     remove: () => { }
