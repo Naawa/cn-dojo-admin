@@ -71,6 +71,9 @@
 						color: white;
 					}
 				}
+				button:hover {
+					color: #ca0d0d;
+				}
 			}
 		}
 	}
