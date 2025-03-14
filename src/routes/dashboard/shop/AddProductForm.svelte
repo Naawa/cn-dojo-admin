@@ -8,17 +8,15 @@
 	let {
 		open = $bindable(false),
 		form,
-		products,
-		categories
+		categories,
+		location
 	}: {
 		open: boolean;
 		form: ActionData;
-		products: Product[] | null;
 		categories: ProductCategory[] | null;
+		location: string
 	} = $props();
 
-	let productName: string = $state('');
-	let price: number = $state(0);
 	let category: string = $state('');
 	let showImage: boolean = $state(false);
 	let image: HTMLImageElement | null = $state(null);
@@ -65,14 +63,14 @@
 		<span>
 			<div class="input-container">
 				<label for="productName"> Product Name </label>
-				<input bind:value={productName} name="productName" placeholder="Example Product" />
+				<input name="productName" placeholder="Example Product" />
 			</div>
 		</span>
 
 		<span>
 			<div class="input-container">
 				<label for="price"> Price (pts) </label>
-				<input type="text" bind:value={price} name="price" />
+				<input type="text" name="price" />
 			</div>
 		</span>
 
@@ -86,6 +84,20 @@
 				{/if}
 			</select>
 		</div>
+		<span>
+			<div class="input-container">
+				<label for="desccription"> Description </label>
+				<textarea id="description" name="description">
+			</textarea>
+			</div>
+		</span>
+		<input
+			type="hidden"
+			style="display: none;"
+			value={location}
+			name="center"
+			autocomplete="new-password"
+		/>
 		<label for="file-upload" class="custom-file-upload"> Upload Image </label>
 		<input id="file-upload" name="image" type="file" bind:this={input} onchange={updatePreview} />
 		<br />

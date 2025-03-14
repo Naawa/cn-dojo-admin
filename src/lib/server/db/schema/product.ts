@@ -9,6 +9,7 @@ export const product = pgTable('product', {
     description: text('description').notNull(),
     category: text('category').references(() => productCategory.category),
     center: text('center').notNull().references(() => center.location),
+    url: text('url').notNull(),
     ...timestamps
 });
 

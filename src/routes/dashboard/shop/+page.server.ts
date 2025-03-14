@@ -52,8 +52,10 @@ export const actions: Actions = {
             name: formData.get('productName') as string,
             price: parseFloat(formData.get('price') as string),
             category: formData.get('category') as string,
-            image: formData.get('image') as File
+            center: formData.get('center') as string,
+            description: formData.get('description') as string,
         };
+        const image = formData.get('image') as File
 
         if (!validateName(productData.name)) {
             return fail(400, { error: "Invalid product name." });
@@ -63,16 +65,35 @@ export const actions: Actions = {
             return fail(400, { error: "Invalid price." });
         }
 
-        if(!productData.image) {
+        if (!image) {
             return fail(400, { error: "Please upload an image!" });
         }
 
-        // Insert into database (mocked for now)
-        console.log("New product added:", productData);
-        let url = ""
-        // const { url } = await put(productData.image.name, productData.image, { access: "public" });
+        /**
+         * Insert image into blob storage.
+         */
+        // const { url } = await put(image.name, image, { access: "public" });
 
-        return { success: "Successfully added product!", imageUrl: url };
+        // /**
+        //  * Store url in database.
+        //  */
+        // try {
+        //     const newProduct: Product[] = await db.insert(productTable).values({
+        //         ...productData,
+        //         url,
+        //         center: productData.center
+        //     }).returning()
+
+        //     if (newProduct) {
+        //         return { success: "Successfully added product!", imageUrl: url };
+        //     }
+
+        // } catch (error) {
+        //     return fail(500, { message: 'An error has occurred. ' + error });
+        // }
+        console.log(productData, image)
+
+
     },
     update: () => { },
     remove: () => { }

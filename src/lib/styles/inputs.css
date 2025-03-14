@@ -1,4 +1,4 @@
-.custom-file-upload, input, select, option {
+.custom-file-upload, input, textarea, select, option {
     padding: 0.7em 1.3em;
     border: solid 0.16em rgba(200, 210, 219, 0.262);
     border-radius: 0.25em;
@@ -30,7 +30,7 @@
 }
 
 @media (width < 1200px) {
-    input, select, option {
+    input, select, option, textarea {
         width: 100%;
     }
 }
