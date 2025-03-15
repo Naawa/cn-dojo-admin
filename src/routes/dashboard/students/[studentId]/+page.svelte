@@ -58,8 +58,12 @@
 
 <style>
   section {
+    position: relative;
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
+    height: 100%;
     gap: 0;
   }
 </style>

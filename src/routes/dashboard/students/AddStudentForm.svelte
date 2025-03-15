@@ -11,7 +11,12 @@
 		form,
 		students,
 		location
-	}: { open: boolean; form: ActionData; students: { student: Student, student_profile: StudentProfile }[]; location: string } = $props();
+	}: {
+		open: boolean;
+		form: ActionData;
+		students: { student: Student; student_profile: StudentProfile }[];
+		location: string;
+	} = $props();
 
 	let firstName: string = $state('');
 	let lastName: string = $state('');
@@ -20,7 +25,7 @@
 	let center: string = $state(location);
 
 	$effect(() => {
-		userName = (firstName + '.' + lastName).toLocaleLowerCase().replace(/\s/g, '');;
+		userName = (firstName + '.' + lastName).toLocaleLowerCase().replace(/\s/g, '');
 	});
 
 	$effect(() => {
@@ -129,15 +134,18 @@
 				<label for="level">Level</label>
 				<input name="level" autocomplete="new-password" placeholder="1" />
 			</div>
+		</span>
+		<span>
 			<div class="input-container">
 				<label for="points"> Starting Points</label>
 				<input name="points" placeholder="10" />
 			</div>
+			<div class="input-container">
+				<label for="wristbandId"> Wristband ID </label>
+				<input name="wristbandId" placeholder="Scan Wristband" />
+			</div>
 		</span>
-		<div class="input-container">
-			<label for="wristbandId"> Wristband ID </label>
-			<input name="wristbandId" placeholder="Scan Wristband" />
-		</div>
+
 		<input
 			type="hidden"
 			style="display: none;"
@@ -148,9 +156,12 @@
 		{#if form?.error || form?.success}
 			<b class:error={form.error} class:success={form.success}>{form.success}{form.error}</b>
 		{/if}
-		<button type="submit" onclick={() => {
-			invalidateAll()
-		}}>Add to Classlist</button>
+		<button
+			type="submit"
+			onclick={() => {
+				invalidateAll();
+			}}>Add to Classlist</button
+		>
 	</form>
 </section>
 

@@ -1,9 +1,9 @@
-import { pgTable, serial, text, timestamp, uuid } from 'drizzle-orm/pg-core';
+import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
 import { admin } from './admin';
 import { student } from './student';
 
 export const adminSession = pgTable('admin_session', {
-	id: text("id").notNull(),
+	id: text("id").notNull().primaryKey(),
 	adminId: uuid('admin_id')
 		.notNull()
 		.references(() => admin.id).notNull(),
@@ -11,7 +11,7 @@ export const adminSession = pgTable('admin_session', {
 });
 
 export const studentSession = pgTable('student_session', {
-	id: text("id").notNull(),
+	id: text("id").notNull().primaryKey(),
 	studentId: uuid('student_id')
 		.notNull()
 		.references(() => student.id).notNull(),
