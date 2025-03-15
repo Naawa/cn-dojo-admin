@@ -9,15 +9,15 @@
 		open = $bindable(false),
 		form,
 		categories,
-		location
+		center
 	}: {
 		open: boolean;
 		form: ActionData;
 		categories: ProductCategory[] | null;
-		location: string
+		center: string | undefined;
 	} = $props();
 
-	let category: string = $state('');
+	let category: string | undefined = $state();
 	let showImage: boolean = $state(false);
 	let image: HTMLImageElement | null = $state(null);
 	let input: HTMLInputElement | null = $state(null);
@@ -44,7 +44,7 @@
 </script>
 
 <section class="bordered" transition:scale>
-	<form method="post" action="/dashboard/shop?/add" use:enhance>
+	<form enctype="multipart/form-data" method="post" action="/dashboard/shop?/add" use:enhance>
 		<span>
 			<h2>New Product</h2>
 			<button
@@ -70,16 +70,16 @@
 		<span>
 			<div class="input-container">
 				<label for="price"> Price (pts) </label>
-				<input type="text" name="price" />
+				<input type="text" name="price" placeholder="25" />
 			</div>
 		</span>
 
 		<div class="input-container">
-			<label for="belt">Category</label>
-			<select bind:value={category} name="belt">
+			<label for="category">Category</label>
+			<select bind:value={category} name="category">
 				{#if categories}
-					{#each categories as category}
-						<option value={category}>{category}</option>
+					{#each categories as obj}
+						<option value={obj.category}>{obj.category}</option>
 					{/each}
 				{/if}
 			</select>
@@ -87,14 +87,13 @@
 		<span>
 			<div class="input-container">
 				<label for="desccription"> Description </label>
-				<textarea id="description" name="description">
-			</textarea>
+				<textarea id="description" name="description" placeholder="What is it?"></textarea>
 			</div>
 		</span>
 		<input
 			type="hidden"
 			style="display: none;"
-			value={location}
+			value={center}
 			name="center"
 			autocomplete="new-password"
 		/>
@@ -103,15 +102,17 @@
 		<br />
 		<b>Image upload guidelines.</b>
 		<ul>
-			<li>3D Print and Icons should have a 1:1 aspect ratio.</li>
+			<li>Icons should have a 1:1 aspect ratio.</li>
 			<li>Name tag banner should have a 21:9 aspect ratio.</li>
+			<li>Full HD to 4k resolution is ideal.</li>
 		</ul>
 		<br />
 		{#if showImage}
 			<img bind:this={image} alt="Yuh" />
-			{:else} 
+		{:else}
 			<div id="preview-placeholder" class="bordered">
-				Preview Image
+				<b>Image Preview</b>
+				<p>Please upload an image.</p>
 			</div>
 		{/if}
 		{#if form?.error || form?.success}
@@ -139,17 +140,18 @@
 		width: 100%;
 		min-width: fit-content;
 		overflow: scroll;
-		padding: 2em;
 
 		form {
-			position: relative;
+			position: absolute;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
 			gap: 1em;
 			max-width: 24em;
-			padding-top: 18em;
+			padding-top: 0em;
+			top: 0;
+			padding: 2em 0;
 
 			input,
 			select {
@@ -169,11 +171,13 @@
 				right: 11.25%;
 				width: 100%;
 			}
-			img, #preview-placeholder {
+			img,
+			#preview-placeholder {
 				min-height: 16em;
 				text-align: center;
 				display: flex;
 				width: 100%;
+				flex-direction: column;
 				justify-content: center;
 				align-items: center;
 			}

@@ -9,7 +9,7 @@ export const product = pgTable('product', {
     description: text('description').notNull(),
     category: text('category').references(() => productCategory.category),
     center: text('center').notNull().references(() => center.location),
-    url: text('url').notNull(),
+    imageUrl: text('image_url').notNull(),
     ...timestamps
 });
 
@@ -19,7 +19,7 @@ export const productCategory = pgTable('product_category', {
     ...timestamps
 })
 
-export const productImage = pgTable('product_images', {
+export const productImage = pgTable('product_image', {
     id: serial('id').primaryKey(),
     productId: serial('product_id').references(() => product.id),
     source: text("source").unique().notNull()

@@ -5,6 +5,7 @@ import { product as productTable, productCategory as productCategoryTable, type 
 import { db } from "$lib/server/db/index.js";
 import { eq } from "drizzle-orm";
 import { put } from "@vercel/blob";
+import { BLOB_READ_WRITE_TOKEN } from "$env/static/private";
 
 export const load: PageServerLoad = async ({ locals }) => {
     let admin = locals.admin;
@@ -49,11 +50,11 @@ export const actions: Actions = {
         const formData = await event.request.formData();
 
         let productData = {
-            name: formData.get('productName') as string,
-            price: parseFloat(formData.get('price') as string),
+            name: (formData.get('productName') as string).trim(),
+            price: parseInt(formData.get('price') as string),
             category: formData.get('category') as string,
             center: formData.get('center') as string,
-            description: formData.get('description') as string,
+            description: (formData.get('description') as string).trim(),
         };
         const image = formData.get('image') as File
 
@@ -71,28 +72,27 @@ export const actions: Actions = {
 
         /**
          * Insert image into blob storage.
+         * 
          */
-        // const { url } = await put(image.name, image, { access: "public" });
+        const { url } = await put(image.name, image, { access: "public", token: BLOB_READ_WRITE_TOKEN });
 
-        // /**
-        //  * Store url in database.
-        //  */
-        // try {
-        //     const newProduct: Product[] = await db.insert(productTable).values({
-        //         ...productData,
-        //         url,
-        //         center: productData.center
-        //     }).returning()
+        /**
+         * Store url in database.
+         */
+        try {
+            const newProduct: Product[] = await db.insert(productTable).values({
+                ...productData,
+                imageUrl: url,
+                center: productData.center
+            }).returning()
 
-        //     if (newProduct) {
-        //         return { success: "Successfully added product!", imageUrl: url };
-        //     }
+            if (newProduct) {
+                return { success: "Successfully added product!" };
+            }
 
-        // } catch (error) {
-        //     return fail(500, { message: 'An error has occurred. ' + error });
-        // }
-        console.log(productData, image)
-
+        } catch (error) {
+            return fail(500, { message: 'An error has occurred. ' + error });
+        }
 
     },
     update: () => { },

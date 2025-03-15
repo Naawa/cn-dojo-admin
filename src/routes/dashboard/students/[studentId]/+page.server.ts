@@ -1,23 +1,24 @@
 import { db } from "$lib/server/db/index.js";
-import { studentProfile as studentProfileTable } from "$lib/server/db/schema/student.js";
-import { fail, type Actions } from "@sveltejs/kit";
+import { student as studentTable, studentProfile as studentProfileTable } from "$lib/server/db/schema/student.js";
+import { fail, redirect, type Actions } from "@sveltejs/kit";
 import { eq } from "drizzle-orm";
 
+
 export const load = async ({params}) => {
-    let userName = params.student
+    let studentId = params.studentId
 
     return {
-        userName
+        studentId
     }
 };
 
 export const actions: Actions = {
-    addPoints: async (event) => { 
-        const formData = await event.request.formData()
+    addPoints: async ({params, request}) => { 
+        const formData = await request.formData()
 
         const currentPoints = parseInt(formData.get('points') as string)
         const pointsToAdd = parseInt(formData.get('pointsToAdd') as string)
-        const studentId = formData.get('studentId') as string
+        const studentId = params.studentId
         if(Number.isNaN(pointsToAdd)) {
             return fail(400,  { error: "Please enter a number."})
         }
@@ -36,5 +37,15 @@ export const actions: Actions = {
     },
     removePoints: async ({}) => {
 
-    }
+    },
+    delete: async ({params}) => {
+
+        await db.delete(studentProfileTable).where(eq(studentProfileTable.studentId, params.studentId as string))
+
+        await db.delete(studentTable).where(eq(studentTable.userName, params.studentId as string))
+        
+        throw redirect(302, "/dashboard/students")
+
+    },
+    
 };

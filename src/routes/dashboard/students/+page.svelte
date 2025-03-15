@@ -103,7 +103,7 @@
 		{#key filtered.length}
 			{#if filtered.length >= 1}
 				{#each filtered as data}
-					<a class="card" href="/dashboard/students/{data.student.userName}">
+					<a class="card" href="/dashboard/students/{data.student.id}">
 						<div>
 							<h3>
 								{data.student.firstName}
@@ -115,7 +115,7 @@
 				{/each}
 			{:else if filtered.length == 0}
 				{#each students as data}
-					<a class="card" href="/dashboard/students/{data.student.userName}">
+					<a class="card" href="/dashboard/students/{data.student.id}">
 						<div>
 							<h3>
 								{data.student.firstName}

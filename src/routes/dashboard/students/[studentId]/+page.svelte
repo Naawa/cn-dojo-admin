@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import Delete from '$lib/components/Actions/Delete.svelte';
 	import type { Student, StudentProfile } from '$lib/server/db/schema/student.js';
 
     let { data, form } = $props()
@@ -51,6 +52,7 @@
       {/if}
       <button>-5</button>
     </form>
+    <Delete action="delete" object="student"></Delete>
 </section>
 
 
