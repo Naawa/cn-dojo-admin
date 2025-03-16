@@ -7,8 +7,6 @@
 	let { data, form } = $props();
 	let { studentId, students } = $derived(data);
 
-	let activeTab = $state('positive');
-
 	let studentData: { student: Student; student_profile: StudentProfile } | undefined = $derived.by(() => {
 		for (let i = 0; i < data.students.length; i++) {
 			if (data.students[i].student.id == studentId) {
@@ -33,116 +31,7 @@
 			<h4>Ninja ID: {student.wristbandId}</h4>
 			<h3>{student.email}</h3>
 		</div>
-
-		<!-- Custom Input for Adding Points -->
-		<form
-			method="post"
-			action="/dashboard/students/{studentId}?/addPoints"
-			use:enhance
-			class="custom-controls"
-		>
-			<input type="number" name="pointsToAdd" placeholder="Custom Points" />
-			<input hidden value={student_profile.points} type="text" name="points" />
-			<input hidden value={student.id} type="text" name="studentId" />
-			<button
-				onclick={() => {
-					invalidateAll();
-				}}>Modify Points</button
-			>
-		</form>
 	</div>
-
-	<!-- Tabs for Positive & Negative Buttons -->
-	<div class="tabs">
-		<button
-			onclick={() => (activeTab = 'positive')}
-			class={activeTab === 'positive' ? 'active' : ''}>Positive</button
-		>
-		<button
-			onclick={() => (activeTab = 'negative')}
-			class={activeTab === 'negative' ? 'active' : ''}>Negative</button
-		>
-	</div>
-
-	<!-- Positive Buttons -->
-	{#if activeTab === 'positive'}
-		<div class="grid">
-			<form class="bordered"
-				method="post"
-				action="/dashboard/students/{studentId}?/addPoints"
-				use:enhance={({}) => {
-					reset: true;
-				}}
-			>
-				<input hidden value="5" name="pointsToAdd" />
-				<input hidden value={student_profile.points} type="text" name="points" />
-				<input hidden value={student.id} type="text" name="studentId" />
-				<button
-					class="point-btn positive"
-					onclick={() => {
-						invalidateAll();
-					}}
-				>
-					<span class="point-value">+5</span>
-					<img src="/attention.png" alt="Add Points" class="icon" />
-					<span class="label">Game Finished</span>
-				</button>
-			</form>
-
-			<form class="bordered" method="post" action="/dashboard/students/{studentId}?/addPoints" use:enhance>
-				<input hidden value="10" name="pointsToAdd" />
-				<input hidden value={student_profile.points} type="text" name="points" />
-				<input hidden value={student.id} type="text" name="studentId" />
-				<button
-					class="point-btn positive"
-					onclick={() => {
-						invalidateAll();
-					}}
-				>
-					<span class="point-value">+10</span>
-					<img src="/attention.png" alt="Add Points" class="icon" />
-					<span class="label">Level-Up</span>
-				</button>
-			</form>
-		</div>
-	{/if}
-
-	<!-- Negative Buttons -->
-	{#if activeTab === 'negative'}
-		<div class="grid">
-			<form class="bordered" method="post" action="/dashboard/students/{studentId}?/removePoints" use:enhance>
-				<input hidden value="5" name="pointsToRemove" />
-				<input hidden value={student_profile.points} type="text" name="points" />
-				<input hidden value={student.id} type="text" name="studentId" />
-				<button
-					class="point-btn negative"
-					onclick={() => {
-						invalidateAll();
-					}}
-				>
-					<span class="point-value">-5</span>
-					<img src="/close-login.png" alt="Remove Points" class="icon" />
-					<span class="label">Disrespectful</span>
-				</button>
-			</form>
-
-			<form class="bordered" method="post" action="/dashboard/students/{studentId}?/removePoints" use:enhance>
-				<input hidden value="10" name="pointsToRemove" />
-				<input hidden value={student_profile.points} type="text" name="points" />
-				<input hidden value={student.id} type="text" name="studentId" />
-				<button
-					class="point-btn negative"
-					onclick={() => {
-						invalidateAll();
-					}}
-				>
-					<span class="point-value">-10</span>
-					<img src="/close-login.png" alt="Remove Points" class="icon" />
-					<span class="label">No Bueno</span>
-				</button>
-			</form>
-		</div>
-	{/if}
 	<Delete action="delete" object="student"></Delete>
 </section>
 

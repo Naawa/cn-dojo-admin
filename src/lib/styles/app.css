@@ -37,7 +37,12 @@ button, label, h1, h2, h3, h4, h5 {
   font-family: 'Azo Sans Black';
 }
 
-html, body, input, button {font-size: clamp(16px, 2vh, 2.4vw)} /* 16px */
+html, body, input, button {font-size: clamp(4px, 2vh, 2.4vh)} /* 16px */
+
+@media (width < 400px) {
+  html, body, input, button {font-size: clamp(4px, 4vw, 2.4vh)} /* 16px */
+}
+
 
 
 html, body {
@@ -81,6 +86,6 @@ p {
   color: hsl(0, 0%, 100%);
 }
 
-::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: none;
 }
