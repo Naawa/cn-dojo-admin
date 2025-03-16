@@ -110,9 +110,12 @@
       </form>
   </div>
   {/if}
+<<<<<<< HEAD
       <button>-5</button>
     </form>
     <Delete action="delete" object="student"></Delete>
+=======
+>>>>>>> 04efaad4250792ee6f638a27a44c54b787745989
 </section>
 
 <style>
