@@ -39,7 +39,7 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 		z-index: 1;
 	}
 
-	@media (width < 1400px) {
+	@media (width < 1600px) {
 		.side-nav {
 			display: none;
 		}

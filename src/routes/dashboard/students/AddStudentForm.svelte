@@ -177,7 +177,7 @@
 		width: 100%;
 		min-width: fit-content;
 		overflow: scroll;
-		padding: 2em;
+		padding: 2em 0;
 
 		form {
 			display: flex;
