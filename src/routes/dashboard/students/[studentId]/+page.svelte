@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import Delete from '$lib/components/Actions/Delete.svelte';
 	import type { Student, StudentProfile } from '$lib/server/db/schema/student.js';
+	import { writable } from 'svelte/store';
 
     let { data, form } = $props();
-    let { userName, students } = $state(data);
+    let { studentId, students } = $state(data);
     let studentData: { student: Student, student_profile: StudentProfile } = $state(data.students[0]);
 
     let student = $state(data.students[0].student);
@@ -12,7 +14,7 @@
     let activeTab = writable<'positive' | 'negative'>('positive');
     let index = $state(0);
     for (let i = 0; i < data.students.length; i++) {
-        if (data.students[i].student.userName == userName) {
+        if (data.students[i].student.userName == studentId) {
             index = i;
             break;
         }
@@ -38,7 +40,7 @@
       </div>
 
       <!-- Custom Input for Adding Points -->
-      <form method="post" action="/dashboard/students/{userName}?/addPoints" use:enhance class="custom-controls">
+      <form method="post" action="/dashboard/students/{studentId}?/addPoints" use:enhance class="custom-controls">
           <input type="number" name="pointsToAdd" placeholder="Custom Points">
           <input hidden value={student_profile.points} type="text" name="points">
           <input hidden value={student.id} type="text" name="studentId">
@@ -55,7 +57,7 @@
   <!-- Positive Buttons -->
   {#if $activeTab === 'positive'}
   <div class="grid">
-      <form method="post" action="/dashboard/students/{userName}?/addPoints" use:enhance={
+      <form method="post" action="/dashboard/students/{studentId}?/addPoints" use:enhance={
         ({})=>{reset: true}
       }>
           <input hidden value="5" name="pointsToAdd">
@@ -68,7 +70,7 @@
           </button>
       </form>
 
-      <form method="post" action="/dashboard/students/{userName}?/addPoints" use:enhance>
+      <form method="post" action="/dashboard/students/{studentId}?/addPoints" use:enhance>
           <input hidden value="10" name="pointsToAdd">
           <input hidden value={student_profile.points} type="text" name="points">
           <input hidden value={student.id} type="text" name="studentId">
@@ -84,7 +86,7 @@
   <!-- Negative Buttons -->
   {#if $activeTab === 'negative'}
   <div class="grid">
-      <form method="post" action="/dashboard/students/{userName}?/removePoints" use:enhance>
+      <form method="post" action="/dashboard/students/{studentId}?/removePoints" use:enhance>
           <input hidden value="5" name="pointsToRemove">
           <input hidden value={student_profile.points} type="text" name="points">
           <input hidden value={student.id} type="text" name="studentId">
@@ -95,7 +97,7 @@
           </button>
       </form>
 
-      <form method="post" action="/dashboard/students/{userName}?/removePoints" use:enhance>
+      <form method="post" action="/dashboard/students/{studentId}?/removePoints" use:enhance>
           <input hidden value="10" name="pointsToRemove">
           <input hidden value={student_profile.points} type="text" name="points">
           <input hidden value={student.id} type="text" name="studentId">
