@@ -188,7 +188,7 @@
 		}
 	}
 
-	@media (width < 1400px) {
+	@media (width < 1800px) {
 		section {
 			display: flex;
 			flex-direction: column;

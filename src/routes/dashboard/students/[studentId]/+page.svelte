@@ -22,6 +22,7 @@
     <h1>{student.firstName} {student.lastName}</h1>
     <h3>{student_profile.points} Points</h3>
     <h4>{student_profile.belt} Belt - Level {student_profile.level}</h4>
+    <h4>Ninja ID: {student.wristbandId}</h4>
     <h3>{student.email}</h3>
 
     <form method="post" action="/dashboard/students/{studentId}?/addPoints" use:enhance>
