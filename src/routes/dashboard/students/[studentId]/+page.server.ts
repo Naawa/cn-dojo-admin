@@ -24,7 +24,7 @@ export const actions: Actions = {
             return fail(400,  { error: "Please enter a number."})
         }
         try {
-            let pointsAdded = await db.update(studentProfileTable).set({points: currentPoints + pointsToAdd}).where(eq(studentProfileTable.studentId, studentId)).returning({points: studentProfileTable.points})
+            let pointsAdded = await db.update(studentProfileTable).set({points: currentPoints + pointsToAdd}).where(eq(studentProfileTable.studentId, studentId as string)).returning({points: studentProfileTable.points})
 
             if(pointsAdded[0].points == pointsToAdd) {
                 console.log(pointsAdded)
