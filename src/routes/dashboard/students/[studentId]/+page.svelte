@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 	import Delete from '$lib/components/Actions/Delete.svelte';
 	import type { Student, StudentProfile } from '$lib/server/db/schema/student.js';
+	import { writable } from 'svelte/store';
 
     let { data, form } = $props();
     let { studentId, students } = $state(data);
@@ -31,11 +33,11 @@
   <!-- Student Profile Information -->
   <div class="header">
       <div>
-    <h1>{student.firstName} {student.lastName}</h1>
+          <h1>{student.firstName} {student.lastName}</h1>
           <h2>{student_profile.points} Points</h2>
-    <h4>{student_profile.belt} Belt - Level {student_profile.level}</h4>
+          <h4>{student_profile.belt} Belt - Level {student_profile.level}</h4>
     <h4>Ninja ID: {student.wristbandId}</h4>
-    <h3>{student.email}</h3>
+          <h3>{student.email}</h3>
       </div>
 
       <!-- Custom Input for Adding Points -->
@@ -67,9 +69,9 @@
               <img src="/attention.png" alt="Add Points" class="icon">
               <span class="label">Game Finished</span>
           </button>
-    </form>
+      </form>
 
-    <form method="post" action="/dashboard/students/{studentId}?/addPoints" use:enhance>
+      <form method="post" action="/dashboard/students/{studentId}?/addPoints" use:enhance>
           <input hidden value="10" name="pointsToAdd">
           <input hidden value={student_profile.points} type="text" name="points">
           <input hidden value={student.id} type="text" name="studentId">
@@ -80,7 +82,7 @@
           </button>
       </form>
   </div>
-      {/if}
+  {/if}
 
   <!-- Negative Buttons -->
   {#if $activeTab === 'negative'}
@@ -94,9 +96,9 @@
               <img src="/close-login.png" alt="Remove Points" class="icon">
               <span class="label">Disrespectful</span>
           </button>
-    </form>
+      </form>
 
-    <form method="post" action="/dashboard/students/{studentId}?/removePoints" use:enhance>
+      <form method="post" action="/dashboard/students/{studentId}?/removePoints" use:enhance>
           <input hidden value="10" name="pointsToRemove">
           <input hidden value={student_profile.points} type="text" name="points">
           <input hidden value={student.id} type="text" name="studentId">
@@ -107,7 +109,7 @@
           </button>
       </form>
   </div>
-      {/if}
+  {/if}
       <button>-5</button>
     </form>
     <Delete action="delete" object="student"></Delete>
@@ -133,8 +135,8 @@
   }
 
   .custom-controls {
-    display: flex;
-    align-items: center;
+      display: flex;
+      align-items: center;
       gap: 0.5rem;
   }
 
@@ -166,7 +168,7 @@
       gap: 50px;
       width: fit-content;
       max-width: 600px;
-    justify-content: center;
+      justify-content: center;
   }
 
   .point-btn {
@@ -180,7 +182,7 @@
       cursor: pointer;
       border-radius: 8px;
       display: flex;
-    flex-direction: column;
+      flex-direction: column;
       align-items: center;
       justify-content: flex-start;
       padding: 10px;
