@@ -19,6 +19,7 @@
 
 	let category: string | undefined = $state();
 	let showImage: boolean = $state(false);
+
 	let image: HTMLImageElement | null = $state(null);
 	let input: HTMLInputElement | null = $state(null);
 
@@ -41,6 +42,13 @@
 
 		showImage = false;
 	}
+
+	$effect(() => {
+		if (form?.success) {
+			form.success = '';
+			open = false;
+		}
+	});
 </script>
 
 <section class="bordered" transition:scale>
@@ -123,6 +131,7 @@
 			type="submit"
 			onclick={() => {
 				invalidateAll();
+				open = false;
 			}}>Add to Shop</button
 		>
 	</form>

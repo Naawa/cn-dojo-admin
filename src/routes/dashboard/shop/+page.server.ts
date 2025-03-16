@@ -89,6 +89,9 @@ export const actions: Actions = {
             if (newProduct) {
                 return { success: "Successfully added product!" };
             }
+            else { 
+                return fail(500, { message: 'An error has occurred. ' });
+            }
 
         } catch (error) {
             return fail(500, { message: 'An error has occurred. ' + error });
