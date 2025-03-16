@@ -23,21 +23,40 @@ export const actions: Actions = {
         if(Number.isNaN(pointsToAdd)) {
             return fail(400,  { error: "Please enter a number."})
         }
-        // try {
-        //     let pointsAdded = await db.update(studentProfileTable).set({points: currentPoints + pointsToAdd}).where(eq(studentProfileTable.studentId, studentId)).returning({points: studentProfileTable.points})
+        try {
+            let pointsAdded = await db.update(studentProfileTable).set({points: currentPoints + pointsToAdd}).where(eq(studentProfileTable.studentId, studentId)).returning({points: studentProfileTable.points})
 
-        //     if(pointsAdded[0].points == pointsToAdd) {
-        //         return { success: "Sucessfully added student!" }
-        //     }
+            if(pointsAdded[0].points == pointsToAdd) {
+                console.log(pointsAdded)
+                return { success: "Sucessfully added points!" }
+            }
             
-        // } catch (error) {
-        //     return fail(400, { error: "Points could not be added."})
-        // }
+        } catch (error) {
+            return fail(400, { error: "Points could not be added."})
+        }
 
-        console.log(formData)
+        
     },
-    removePoints: async ({}) => {
+    removePoints: async (event) => {
+        const formData = await event.request.formData()
 
+        const currentPoints = parseInt(formData.get('points') as string)
+        const pointsToSubtract = parseInt(formData.get('pointsToSubtract') as string)
+        const studentId = formData.get('studentId') as string
+        if(Number.isNaN(pointsToSubtract)) {
+            return fail(400,  { error: "Please enter a number."})
+        }
+        try {
+            let pointsAdded = await db.update(studentProfileTable).set({points: currentPoints - pointsToSubtract}).where(eq(studentProfileTable.studentId, studentId)).returning({points: studentProfileTable.points})
+
+            if(pointsAdded[0].points == pointsToSubtract) {
+                console.log(pointsToSubtract)
+                return { success: "Sucessfully deducted points!" }
+            }
+            
+        } catch (error) {
+            return fail(400, { error: "Points could not be deducted."})
+        }
     },
     delete: async ({params}) => {
 
