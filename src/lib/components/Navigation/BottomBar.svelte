@@ -39,8 +39,8 @@
 				align-items: center;
 				text-decoration: none;
 				transition: all 0.2s;
-				height: 3em;
-				width: 3em;
+				height: calc(10vh - 2em);
+				width: calc((100vw - 4em)/7);
 				border-radius: 0.4em;
 				border: solid 0.16em rgba(255, 255, 255, 0.393);
 				text-align: center;
@@ -58,15 +58,17 @@
 				}
 			}
 			form {
-				height: 3em;
-				width: 3em;
+				height: calc(10vh - 2em);
+				width: calc((100vw - 4em)/7);
 				padding: 0;
+				 position: relative;
 
 				button {
-					min-width: 3em;
+					min-width: 100%;
 					padding: 0;
-					height: 3em;
-					width: 3em;
+					height: calc(10vh - 2em);
+					width: 100%;
+					position: absolute;
 					b {
 						color: white;
 					}
@@ -75,6 +77,10 @@
 					color: #ca0d0d;
 				}
 			}
+		}
+
+		b {
+			font-size: 3vh;
 		}
 	}
 </style>

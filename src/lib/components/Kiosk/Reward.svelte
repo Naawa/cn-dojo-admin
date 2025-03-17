@@ -78,6 +78,7 @@
 				}}>Next</button
 			>
 		{:else if next}
+		<h3>Select Student</h3>
 			<input type="text" placeholder="Scan Wristband" bind:value={wristbandId} />
 			<input
 				type="search"

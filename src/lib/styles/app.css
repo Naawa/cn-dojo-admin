@@ -39,8 +39,10 @@ button, label, h1, h2, h3, h4, h5 {
 
 html, body, input, button {font-size: clamp(4px, 2vh, 2.4vh)} /* 16px */
 
-@media (width < 400px) {
-  html, body, input, button {font-size: clamp(4px, 4vw, 2.4vh)} /* 16px */
+@media (width < 1200px) {
+  html, body, input, button {
+    font-size: clamp(4px, 1.6vh, 2vw);
+  } /* 16px */
 }
 
 
