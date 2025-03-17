@@ -80,7 +80,7 @@
 		}
 
 		b {
-			font-size: 3vh;
+			font-size: 2vh;
 		}
 	}
 </style>

@@ -149,6 +149,7 @@
 		width: 100%;
 		min-width: fit-content;
 		overflow: scroll;
+		padding: 2em;
 
 		form {
 			position: absolute;
@@ -191,5 +192,9 @@
 				align-items: center;
 			}
 		}
+	}
+
+	ul {
+		padding: 0 2em;
 	}
 </style>

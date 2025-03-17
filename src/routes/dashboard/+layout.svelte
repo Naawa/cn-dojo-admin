@@ -7,7 +7,7 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 
 <div>
 	<span class="side-nav"><SideBar></SideBar></span>
-	<div class="bordered">
+	<div>
 		<slot />
 	</div>
 	<span class="bottom-nav"><BottomBar></BottomBar></span>
@@ -26,6 +26,7 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 			position: relative;
 			width: 100%;
 			height: 100%;
+			padding: 0;
 		}
 	}
 	.side-nav {

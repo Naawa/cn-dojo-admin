@@ -177,7 +177,7 @@
 		width: 100%;
 		min-width: fit-content;
 		overflow: scroll;
-		padding: 2em 0;
+		padding: 1em;
 
 		form {
 			display: flex;
@@ -199,6 +199,7 @@
 				gap: 1em;
 				justify-content: space-between;
 				align-items: center;
+				flex-wrap: wrap;
 			}
 			button {
 				min-width: none;
