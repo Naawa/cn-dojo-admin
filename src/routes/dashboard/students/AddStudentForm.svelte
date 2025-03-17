@@ -167,8 +167,8 @@
 
 <style>
 	section {
-		justify-content: center;
-		align-items: center;
+		display: grid;
+		place-items: center;
 		position: absolute;
 		background-color: #fcfdff;
 		z-index: 1;
@@ -177,7 +177,7 @@
 		width: 100%;
 		min-width: fit-content;
 		overflow: scroll;
-		padding: 1em;
+		padding:  4em 1em;
 
 		form {
 			display: flex;
@@ -186,7 +186,6 @@
 			justify-content: center;
 			gap: 1em;
 			max-width: 24em;
-			padding-top: 6em;
 
 			input,
 			select {
