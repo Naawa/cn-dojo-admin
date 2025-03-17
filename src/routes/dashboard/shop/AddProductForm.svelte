@@ -2,7 +2,7 @@
 	import { scale } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	import type { Product, ProductCategory } from '$lib/server/db/schema/product';
+	import type { ProductCategory } from '$lib/server/db/schema/product';
 	import { invalidateAll } from '$app/navigation';
 
 	let {
