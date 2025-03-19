@@ -17,7 +17,7 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 	div {
 		display: flex;
 		position: relative;
-		height: 100vh;
+		height: 100svh;
 		gap: 1em;
 		padding: 1em;
 		
@@ -50,7 +50,7 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 		div {
 			flex-direction: column;
 			div {
-				max-height: calc(90vh - 3em);
+				max-height: calc(90svh - 3em);
 				margin-left: 0;
 			}
 		}
