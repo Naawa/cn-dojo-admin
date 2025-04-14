@@ -1,13 +1,11 @@
 <script>
-	import BottomBar from "$lib/components/Navigation/BottomBar.svelte";
-import SideBar from "$lib/components/Navigation/SideBar.svelte";
-
-	
+	import BottomBar from '$lib/components/Navigation/BottomBar.svelte';
+	import SideBar from '$lib/components/Navigation/SideBar.svelte';
 </script>
 
-<div>
+<div class="background">
 	<span class="side-nav"><SideBar></SideBar></span>
-	<div>
+	<div class="main">
 		<slot />
 	</div>
 	<span class="bottom-nav"><BottomBar></BottomBar></span>
@@ -20,7 +18,7 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 		height: 100svh;
 		gap: 1em;
 		padding: 1em;
-		
+
 		div {
 			flex-direction: column;
 			position: relative;
@@ -38,6 +36,19 @@ import SideBar from "$lib/components/Navigation/SideBar.svelte";
 		width: 100;
 		background-color: #fcfdff;
 		z-index: 1;
+	}
+	.background {
+		background: #0067be;
+		background: linear-gradient(
+			180deg,
+			rgb(81, 177, 255) 0%,
+			rgb(182, 93, 255) 50%,
+			rgb(247, 90, 255) 100%
+		);
+	}
+	.main {
+		background-color: #f1f6f8;
+		border-radius: 0.5em;
 	}
 
 	@media (width < 1600px) {

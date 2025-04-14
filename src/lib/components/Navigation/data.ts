@@ -1,30 +1,36 @@
 export interface NavItem {
     url: string,
     text: string,
+    icon: string
 }
 
 export const navItems: NavItem[] = [
     {
         url: "/dashboard",
-        text: "Overview"
+        text: "Overview",
+        icon: "/svgs/home.svg"
     },
     {
         url: "/dashboard/kiosk",
-        text: "Kiosk"
+        text: "Kiosk",
+        icon: "/svgs/kiosk.svg"
     },
     {
         url: "/dashboard/shop",
-        text: "Shop"
+        text: "Shop",
+        icon: "/svgs/shop.svg"
     },
     {
         url: "/dashboard/attendance",
         text: "Attendance",
+        icon: "/svgs/attendance.svg"
     },
     {
         url: "/dashboard/students",
-        text: "Students"
+        text: "Students",
+        icon: "/svgs/students.svg"
     },
-   
-   
-   
+
+
+
 ]

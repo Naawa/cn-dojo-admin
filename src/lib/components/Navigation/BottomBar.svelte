@@ -4,7 +4,7 @@
 	import { page } from '$app/state';
 </script>
 
-<nav class="bordered">
+<nav>
 	<div>
 		{#each navItems as navItem}
 			<a class:active={page.url.pathname == navItem.url} href={navItem.url}
