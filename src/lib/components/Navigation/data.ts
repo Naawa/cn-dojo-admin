@@ -11,19 +11,14 @@ export const navItems: NavItem[] = [
         icon: "/svgs/home.svg"
     },
     {
-        url: "/dashboard/kiosk",
-        text: "Kiosk",
-        icon: "/svgs/kiosk.svg"
+        url: "/dashboard/attendance",
+        text: "Attendance",
+        icon: "/svgs/attendance.svg"
     },
     {
         url: "/dashboard/shop",
         text: "Shop",
         icon: "/svgs/shop.svg"
-    },
-    {
-        url: "/dashboard/attendance",
-        text: "Attendance",
-        icon: "/svgs/attendance.svg"
     },
     {
         url: "/dashboard/students",

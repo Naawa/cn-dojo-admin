@@ -1,34 +1,24 @@
-.card, .modal {
-    padding: 1em;
-    border: solid 0.16em rgba(200, 210, 219, 0.262);
-    border-radius: 0.25em;
-    width: 100%;
-    min-height: fit-content;
-    min-width: 18em;
+.card, .normal-card {
+    padding: 2em;
+    border-radius: 1em;
+    min-width: 12em;
     display: flex;
     flex-direction: column;
-    padding: 2em;
-    gap: 1em;
-    flex: 1;
-    max-width: 48em;
-    scale: 1;
     transition: all 0.2s;
-}
-.modal {
-    background-color: #fcfdff;
-    color: hsl(203, 31%, 23%);
+    background-color: #ffffff;
+    color:  hsl(242, 20%, 27%);
+    border: solid 0.16em #a080ff69;
 }
 
-.bordered {
-    border: solid 0.16em rgba(151, 170, 194, 0.326);
-    border-radius: 0.5em;
+.shadowed {
+    box-shadow: 0 0 1em 0.1em rgba(0, 0, 0, 0.02);
 }
 
-.card:hover, .modal:hover {
-    border: solid 0.16em rgba(151, 170, 194, 0.326);
-    scale: 1.02;
+.card:hover {
+    scale: 1.03;
     transition: all 0.2s;
-    color: hsl(203, 31%, 23%);
+    border: solid 0.16em hsl(255, 100%, 75%);
+    color: hsl(255, 100%, 75%);
 }
 
 .success {

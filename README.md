@@ -1,33 +1,30 @@
-Updated: 2/18/2025
+Updated: 6/2/2025
 
-Todo:
-Students 
-    - Search
+Overview:
+- More Widgets
 
-Student Profile 
-    - Award points.
-    - Edit all fields.
-    - Display inventory.
-    - Display purchase history.
-    - Remove from class.
+Shop:
+- Edit
+- Thumbnails
+- Search
+- Filtering
 
-Attendance
-    - Search
-    - Add to attendance.
-    - Remove from attendance.
-    - Scan wristband.
+Attendance:
+- Scan Wristband To Add
+- Timeblocks
+- Profile Display
+- Remove From Attendance
+- Add/Remove Backend
 
-Timer 
-    - Add hour countdown.
-    - Add timeblock message.
-    - Display 1 activity at a time.
-    - Space for attendance.
-    - Update color palette.
-    - Realtime attendance updates.
+Students:
+- Filtering
+- Edit
 
-Products 
-    - Add/Edit/Remove (Refer to student page.)
+Shop:
+- Search
+- Filtering
+- Edit
 
-Backend
-    - Set up storage bucket for images.
-    - Set up realtime notifications from db.
+Landing Page:
+- Informative
+- Sign In Portal

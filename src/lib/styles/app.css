@@ -19,7 +19,6 @@
 
 
 *, *::before, *::after {
-    color: hsl(203, 31%, 23%);
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -37,12 +36,17 @@ button, label, h1, h2, h3, h4, h5 {
   font-family: 'Azo Sans Black';
 }
 
-html, body, input, button {font-size: clamp(10px, 6vmin, 1.3vmax)} /* 16px */
+html, body, input, button {
+   font-size: clamp(1rem, 2vw, 1.2rem);
+} /* 16px */
 
 
 
 html, body {
+  height: 100%;
   background-color: #fcfdff;
+  color: hsl(242, 20%, 27%);
+
 }
 
 
@@ -61,6 +65,7 @@ small {font-size: 0.667rem; /* 10.72px */}
 section {
   display: flex;
   gap: 2em;
+  padding: 3em 0;
 }
 
 p {

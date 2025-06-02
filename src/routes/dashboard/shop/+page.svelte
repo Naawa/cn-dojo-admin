@@ -16,7 +16,7 @@
 	<h2>Shop</h2>
 	<br />
 	<span>
-		<input type="search" placeholder="Search" />
+		<input class="shadowed" type="search" placeholder="Search" />
 		<button
 			onclick={() => {
 				showForm = true;
@@ -27,7 +27,7 @@
 	<span>
 		{#if products}
 			{#each products as product}
-				<a class="card" href="/dashboard/shop/{product.id}">
+				<a class="card"  href="/dashboard/shop/{product.id}">
 					<div>
 						<h3>{product.name}</h3>
 						<h4>{product.price} Pts</h4>
@@ -59,8 +59,14 @@
 			overflow: scroll;
 		}
 
-		a {
+		a,div {
+			background-color: white;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 			text-decoration: none;
 		}
+
 	}
 </style>

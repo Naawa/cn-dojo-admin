@@ -7,80 +7,103 @@
 <nav>
 	<div>
 		{#each navItems as navItem}
-			<a class:active={page.url.pathname == navItem.url} href={navItem.url}
-				><b>
-					{navItem.text.charAt(0)}
-				</b></a
-			>
+			<a class:active={page.url.pathname == navItem.url} href={navItem.url}>
+				<img src={navItem.icon} alt="Icon" />
+				<div class="orb"></div>
+			</a>
 		{/each}
 		<form method="post" action="/dashboard?/logout" use:enhance>
-			<button class="danger-btn"> <b>L</b> </button>
+			<button class="transparent" id="mobileSignOut">
+				<img src="/svgs/logout.svg" alt="Icon" />
+				<div class="orb"></div>
+			</button>
 		</form>
 	</div>
 </nav>
 
 <style>
 	nav {
-		padding: 1em 0;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		width: 100%;
-		height: 10svh;
+		height: fit-content;
 
 		div {
 			display: flex;
-			justify-content: center;
+			justify-content: space-evenly;
 			align-items: center;
-			gap: 0.5em;
+			gap: 1em;
 			a {
+				border: none;
 				display: flex;
+				flex-direction: column;
 				justify-content: center;
 				align-items: center;
 				text-decoration: none;
 				transition: all 0.2s;
-				height: calc(10vh - 2em);
-				width: calc((100vw - 4em)/7);
+				width: fit-content;
 				border-radius: 0.4em;
-				border: solid 0.16em rgba(255, 255, 255, 0.393);
 				text-align: center;
-				b {
-					transition: all 0.2s;
+				gap: 0;
+
+				img {
+					height: 8vw;
 				}
 			}
 			a:hover,
 			.active {
 				transition: all 0.2s;
-				background-color: rgba(0, 123, 227, 1);
-				b {
+				.orb {
+					background-color: #f1f6f8;
 					transition: all 0.2s;
-					color: white;
-				}
-			}
-			form {
-				height: calc(10vh - 2em);
-				width: calc((100vw - 4em)/7);
-				padding: 0;
-				 position: relative;
-
-				button {
-					min-width: 100%;
-					padding: 0;
-					height: calc(10vh - 2em);
-					width: 100%;
-					position: absolute;
-					b {
-						color: white;
-					}
-				}
-				button:hover {
-					color: #ca0d0d;
 				}
 			}
 		}
 
-		b {
-			font-size: 2vh;
+		form {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: relative;
+
+			button {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-width: 100%;
+				transition: all 0.2s;
+				padding: 0;
+				margin: 0;
+				min-height: fit-content;
+				min-width: fit-content;
+				height: fit-content;
+				width: fit-content;
+
+				img {
+					height: 8vw;
+				}
+			}
+
+			button:hover {
+				transition: all 0.2s;
+				.orb {
+					background-color: #f1f6f8;
+					transition: all 0.2s;
+				}
+			}
+		}
+
+		.orb {
+			height: 0.75vw;
+			width: 4vw;
+			background-color: #f1f6f8;
+			border-radius: 1em;
+			background-color: transparent;
+			transition: all 0.2s;
+			right: 0;
 		}
 	}
 </style>

@@ -83,6 +83,74 @@
 		} else {
 			filtered = [];
 		}
+	});$effect(() => {
+		students = data.students;
+	});
+
+	$effect(() => {
+		if (searchTerm.length > 0) {
+			/**
+			 * // Searching
+			 * 1. Check if keys include search term.
+			 * 2. Then check if students have already been searched.
+			 * 3. Then check push to array, else skip.\
+			 */
+			for (let i = 0; i < students.length; i++) {
+				let { student } = students[i];
+				let { student_profile } = students[i];
+				let studentKeys = (student.firstName + student.lastName).toLocaleLowerCase();
+
+				if (studentKeys.includes(searchTerm)) {
+					// 1. Check if already searched.
+					let searched = false;
+					for (let j = 0; j < filtered.length; j++) {
+						let filteredStudentKeys = (
+							filtered[j].student.firstName + filtered[j].student.lastName
+						).toLocaleLowerCase();
+
+						if (filteredStudentKeys == studentKeys) {
+							searched = true;
+							break;
+						}
+					}
+					if (!searched) {
+						filtered.push({ student, student_profile });
+					}
+				}
+				/**
+				 // Sorting
+				* 1. Check which key includes more characters.
+				* 2. Check which key contains the search term first.
+				* 3. Check if key starts with search term.
+				* 
+				*/
+				filtered.sort((x, y) => {
+					let xKeys = (x.student.firstName + x.student.lastName).toLocaleLowerCase();
+					let yKeys = (y.student.firstName + y.student.lastName).toLocaleLowerCase();
+
+					let xKeyChars = 0;
+					let yKeyChars = 0;
+
+					for (let k = 0; k < searchTerm.length; k++) {
+						if (xKeys.includes(searchTerm.charAt(k))) {
+							xKeyChars++;
+						}
+						if (yKeys.includes(searchTerm.charAt(k))) {
+							yKeyChars++;
+						}
+					}
+					if (xKeys.indexOf(searchTerm) < yKeys.indexOf(searchTerm) || xKeyChars > yKeyChars || xKeys.indexOf(searchTerm) == 0) {
+						return -1;
+					}
+					if (xKeys.indexOf(searchTerm) == yKeys.indexOf(searchTerm) && xKeyChars == yKeyChars) {
+						return 0;
+					} 
+					return 1;
+				}); 
+			}
+		} else {
+			filtered = [];
+		}
 	});
 </script>
 
@@ -92,7 +160,7 @@
 	{/if}
 	<h2>Students</h2>
 	<span>
-		<input bind:value={searchTerm} type="search" placeholder="Search" />
+		<input class="shadowed" bind:value={searchTerm} type="search" placeholder="Search" />
 		<button
 			onclick={() => {
 				showForm = true;
@@ -109,7 +177,7 @@
 								{data.student.firstName}
 								{data.student.lastName}
 							</h3>
-							<h4>Points: {data.student_profile.points}</h4>
+							<h4>{data.student_profile.points} Pts</h4>
 						</div>
 					</a>
 				{/each}
@@ -121,7 +189,7 @@
 								{data.student.firstName}
 								{data.student.lastName}
 							</h3>
-							<h4>Points: {data.student_profile.points}</h4>
+							<h4>{data.student_profile.points} Pts</h4>
 						</div>
 					</a>
 				{/each}
@@ -152,8 +220,14 @@
 			overflow: scroll;
 		}
 
-		a {
+		a,div {
+			background-color: white;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 			text-decoration: none;
+			color: inherit;
 		}
 	}
 </style>

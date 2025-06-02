@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm';
 import { sha256 } from '@oslojs/crypto/sha2';
 import { encodeBase64url, encodeHexLowerCase } from '@oslojs/encoding';
 import { db } from '$lib/server/db';
-import { adminSession, type AdminSession } from '$lib/server/db/schema/session';
+import { adminSession as adminSessionTable, type AdminSession } from '$lib/server/db/schema/session';
 import { admin as adminTable } from './db/schema/admin';
 
 
@@ -24,17 +24,17 @@ export async function createSession(token: string, adminId: string) {
 		adminId,
 		expiresAt: new Date(Date.now() + DAY_IN_MS * 30)
 	};
-	await db.insert(adminSession).values(session);
+	await db.insert(adminSessionTable).values(session);
 	return session;
 }
 
 export async function validateSessionToken(token: string) {
 	const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
 	const result = await db
-		.select({ admin: adminTable, session: adminSession})
-		.from(adminSession)
-		.innerJoin(adminTable, eq(adminSession.adminId, adminTable.id))
-		.where(eq(adminSession.id, sessionId));
+		.select({ admin: adminTable, session: adminSessionTable})
+		.from(adminSessionTable)
+		.innerJoin(adminTable, eq(adminSessionTable.adminId, adminTable.id))
+		.where(eq(adminSessionTable.id, sessionId));
 
 	if (result.length == 0) {
 		return { session: null, admin: null };
@@ -43,7 +43,7 @@ export async function validateSessionToken(token: string) {
 
 	const sessionExpired = Date.now() >= session.expiresAt.getTime();
 	if (sessionExpired) {
-		await db.delete(adminSession).where(eq(adminSession.id, session.id));
+		await db.delete(adminSessionTable).where(eq(adminSessionTable.id, session.id));
 		return { session: null, admin: null };
 	}
 
@@ -51,9 +51,9 @@ export async function validateSessionToken(token: string) {
 	if (renewSession) {
 		session.expiresAt = new Date(Date.now() + DAY_IN_MS * 30);
 		await db
-			.update(adminSession)
+			.update(adminSessionTable)
 			.set({ expiresAt: session.expiresAt })
-			.where(eq(adminSession.id, session.id));
+			.where(eq(adminSessionTable.id, session.id));
 	}
 
 	return { session, admin };
@@ -62,7 +62,7 @@ export async function validateSessionToken(token: string) {
 export type SessionValidationResult = Awaited<ReturnType<typeof validateSessionToken>>;
 
 export async function invalidateSession(sessionId: string) {
-	await db.delete(adminSession).where(eq(adminSession.id, sessionId));
+	await db.delete(adminSessionTable).where(eq(adminSessionTable.id, sessionId));
 }
 
 export function setSessionTokenCookie(event: RequestEvent, token: string, expiresAt: Date) {

@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { PageServerData } from './$types';
 
-	let { data }: { data: PageServerData } = $props();
+	let { data } = $props();
 
 	/**
 	 * Overview
@@ -11,30 +10,43 @@
 </script>
 
 <section>
-	<h1>Overview</h1>	
-	<div class="card">
-		<h2>Hi, {data.admin.firstName}!</h2>
-		<p>
-			Welcome to your dashboard, on this overview page you'll get a summary of your students, attendance, shop and more! Use the links in the navigation to access the other pages.
-		</p>
-		<br>
-		<a href="/"><button class="primary">Visit Store</button></a>
-	</div>
+	<h1>Overview</h1>
+	<span>
+		<div class="normal-card shadowed">
+			<h3>Hi, {data.admin.firstName}!</h3>
+			<p>
+				Welcome to your dashboard, on this overview page you'll get a summary of your students,
+				attendance, shop and more! Use the links in the navigation bar to access the other pages.
+			</p>
+			<br />
+		</div>
+		<div class="normal-card shadowed">
+			<h3>Students</h3>
+			<p>Your center has <b>{data.students.length}</b> students!</p>
+		</div>
+		<div class="normal-card shadowed">
+			<h3>Attendees</h3>
+			<p>There are currently <b>{data.attendees.length}</b> attending students!</p>
+		</div>
+	</span>
 </section>
 
 <style>
 	section {
 		display: flex;
 		flex-direction: column;
-		align-items: center;
-		width: 100%;
-		position: relative;
+		justify-content: center;
+		gap: 1em;
 
-		div, .card {
-			min-height: fit-content;
-			height: fit-content;
-			flex: 0;
+		span {
+			gap: 1em;
+			display: flex;
+			flex-wrap: wrap;
 		}
 
+		h1 {
+			width: 100%;
+			text-align: center;
+		}
 	}
 </style>

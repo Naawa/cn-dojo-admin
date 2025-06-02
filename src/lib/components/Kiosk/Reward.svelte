@@ -40,7 +40,7 @@
 	});
 </script>
 
-<form method="post" action="{page.url.pathname}?/{reward}" class="bordered" transition:scale use:enhance>
+<form method="post" action="{page.url.pathname}?/{reward}" class="bordered shadowed" transition:scale use:enhance>
 	<span>
 		<h3>Reward Points</h3>
 		<button
@@ -117,6 +117,7 @@
 <style>
 	form {
 		position: absolute;
+		top: 0;
 		height: 100%;
 		width: 100%;
 		background-color: #fcfdff;

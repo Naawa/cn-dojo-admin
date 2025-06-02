@@ -51,7 +51,7 @@
 	});
 </script>
 
-<section class="bordered" transition:scale>
+<section class="bordered shadowed" transition:scale>
 	<form enctype="multipart/form-data" method="post" action="/dashboard/shop?/add" use:enhance>
 		<span>
 			<h2>New Product</h2>
@@ -142,7 +142,13 @@
 		display: grid;
 		place-items: center;
 		position: absolute;
-		background-color: #fcfdff;
+		background: white;
+		background: linear-gradient(
+			180deg,
+			rgb(244, 245, 255) 0%,
+			rgb(249, 241, 255) 50%,
+			rgb(255, 239, 239) 100%
+		);
 		z-index: 1;
 		gap: 1em;
 		height: 100%;

@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { page } from "$app/state";
+	import { scale } from "svelte/transition";
 
 	let { action, object } = $props();
 	let showConfirmRequest = $state(false);
 </script>
 
 <button class="danger-btn" onclick={() => (showConfirmRequest = true)}>Delete</button>
+
 {#if showConfirmRequest}
-	<form class="bordered" method="post" action="{page.url.pathname}?/{action}">
+	<form transition:scale method="post" action="{page.url.pathname}?/{action}">
 		<b>Are you sure you want to delete this {object}?</b>
 		<span>
 			<button class="danger-btn" type="submit"
@@ -27,8 +29,15 @@
 		position: absolute;
 		height: 100%;
 		width: 100%;
-		background-color: #fcfdff;
         gap: 1em;
+		top: 0;
+		background: white;
+		background: linear-gradient(
+			180deg,
+			rgb(244, 245, 255) 0%,
+			rgb(249, 241, 255) 50%,
+			rgb(255, 239, 239) 100%
+		);
 
         span {
             display: flex;

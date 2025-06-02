@@ -17,7 +17,8 @@
 		position: relative;
 		height: 100svh;
 		gap: 1em;
-		padding: 1em;
+
+		overflow: scroll;
 
 		div {
 			flex-direction: column;
@@ -34,34 +35,41 @@
 		display: none;
 		bottom: 0;
 		width: 100;
-		background-color: #fcfdff;
 		z-index: 1;
 	}
 	.background {
 		background: #0067be;
 		background: linear-gradient(
 			180deg,
-			rgb(81, 177, 255) 0%,
-			rgb(182, 93, 255) 50%,
-			rgb(247, 90, 255) 100%
+			rgb(80, 103, 255) 0%,
+			rgb(207, 147, 255) 50%,
+			rgb(255, 156, 157) 100%
 		);
 	}
 	.main {
-		background-color: #f1f6f8;
-		border-radius: 0.5em;
+		background: white;
+		background: linear-gradient(
+			180deg,
+			rgb(244, 245, 255) 0%,
+			rgb(249, 241, 255) 50%,
+			rgb(255, 239, 239) 100%
+		);
+		padding: 1em;
 	}
 
-	@media (width < 1600px) {
+	@media (width < 800px) {
 		.side-nav {
 			display: none;
 		}
 		.bottom-nav {
 			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 		div {
 			flex-direction: column;
 			div {
-				max-height: calc(90svh - 3em);
+				max-height: calc(100svh - 15vw);
 				margin-left: 0;
 			}
 		}

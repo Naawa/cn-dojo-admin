@@ -2,9 +2,10 @@
 	import { scale } from 'svelte/transition';
 	import { enhance } from '$app/forms';
 	import type { ActionData } from './$types';
-	import { belts } from '$lib/data';
+	import { belts, months } from '$lib/data';
 	import type { Student, StudentProfile } from '$lib/server/db/schema/student';
 	import { invalidate, invalidateAll } from '$app/navigation';
+	import { page } from '$app/state';
 
 	let {
 		open = $bindable(false),
@@ -47,7 +48,7 @@
 	});
 </script>
 
-<section transition:scale class="bordered">
+<section transition:scale class="bordered shadowed">
 	<form method="post" action="/dashboard/students?/add" use:enhance>
 		<span>
 			<h2>New Student</h2>
@@ -90,12 +91,16 @@
 		<h4>Date of Birth</h4>
 		<span>
 			<div class="input-container">
-				<label for="dayOfBirth"> Day </label>
-				<input name="dayOfBirth" autocomplete="new-password" placeholder="1" />
+				<label for="monthOfBirth"> Month </label>
+				<select name="monthOfBirth">
+					{#each months as month}
+						<option value={month.value}>{month.name}</option>
+					{/each}
+				</select>
 			</div>
 			<div class="input-container">
-				<label for="monthOfBirth"> Month </label>
-				<input name="monthOfBirth" autocomplete="new-password" placeholder="1" />
+				<label for="dayOfBirth"> Day </label>
+				<input name="dayOfBirth" autocomplete="new-password" placeholder="1" />
 			</div>
 			<div class="input-container">
 				<label for="yearOfBirth"> Year </label>
@@ -117,7 +122,7 @@
 			</div>
 			<div class="input-container">
 				<label for="password"> Password </label>
-				<input type="password" name="password" autocomplete="new-password" placeholder="......." />
+				<input type="password" name="password"/>
 			</div>
 		</span>
 		<span>
@@ -159,7 +164,7 @@
 		<button
 			type="submit"
 			onclick={() => {
-				invalidateAll();
+				invalidate(`/${page.url}`)
 			}}>Add to Classlist</button
 		>
 	</form>
@@ -170,7 +175,13 @@
 		display: grid;
 		place-items: center;
 		position: absolute;
-		background-color: #fcfdff;
+		background: white;
+		background: linear-gradient(
+			180deg,
+			rgb(244, 245, 255) 0%,
+			rgb(249, 241, 255) 50%,
+			rgb(255, 239, 239) 100%
+		);
 		z-index: 1;
 		gap: 1em;
 		height: 100%;

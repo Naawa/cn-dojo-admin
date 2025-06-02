@@ -1,13 +1,20 @@
 .custom-file-upload, input, textarea, select, option {
-    padding: 0.7em 1.3em;
-    border: solid 0.16em rgba(200, 210, 219, 0.262);
+    padding: 1.25em 1em 0.15em;
+    border: solid 0.16em #a080ff69;
     border-radius: 0.25em;
-    background-color: transparent;
+    background-color: white;
     font-family: "Azo Sans Bold";
     transition: all 0.2s;
+    color: #9f80ff;
+    min-width: 18em;
+}
+
+.custom-file-upload, input[type=search], input[type=file]  {
+    padding: 1em;
+    height: 3em;
 }
 .custom-file-upload:focus, .custom-file-upload:hover, input:focus, input:hover, select:focus, select:hover, textarea:hover, textarea:focus {
-    border: solid 0.16em rgba(151, 170, 194, 0.326);
+    border-color: #9f80ff;
     transition: all 0.2s;
 }
 
@@ -19,12 +26,11 @@
     position: relative;
 
     label {
-        font-size: 0.85rem;
+        font-size: 0.85em;
         position: absolute;
-        left: 1.25em;
-        top: -0.75em;
-        background-color: #fcfdff;
-        padding: 0 0.2em;
+        left: 1.3em;
+        top: 0.5em;
+        background-color: transparent;
         font-family: "Azo Sans Bold";
     }
 }

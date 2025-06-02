@@ -23,7 +23,7 @@
 
 <section>
 	<!-- Student Profile Information -->
-	<div class="header">
+	<div class="header card">
 		<div>
 			<h1>{student.firstName} {student.lastName}</h1>
 			<h2>{student_profile.points} Points</h2>
